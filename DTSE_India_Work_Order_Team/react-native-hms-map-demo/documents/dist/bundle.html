@@ -1,0 +1,527 @@
+<html>
+  <head>
+    <link href="https://unpkg.com/github-markdown-css@2.10.0/github-markdown.css" rel="stylesheet" />
+    <link href="https://unpkg.com/highlight.js@9.12.0/styles/github.css" rel="stylesheet" />
+    <style>
+      .markdown-body {
+        box-sizing: border-box;
+        min-width: 200px;
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 45px;
+      }
+
+      @media (max-width: 767px) {
+        .markdown-body {
+          padding: 15px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="markdown-body">
+      <h1 id="map-kit-developer-guides-for-reactnative">
+      <a href="#map-kit-developer-guides-for-reactnative" aria-hidden="true"><i class="icon icon-link"></i></a>
+      Map Kit Developer Guides for ReactNative
+    </h1>
+<h2 id="1-preparations">
+      <a href="#1-preparations" aria-hidden="true"><i class="icon icon-link"></i></a>
+      1 Preparations
+    </h2>
+<h2 id="configuring-app-information-in-appgallery-connect">
+      <a href="#configuring-app-information-in-appgallery-connect" aria-hidden="true"><i class="icon icon-link"></i></a>
+      Configuring App Information in AppGallery Connect
+    </h2>
+<p>Before you start developing an app, configure app information in AppGallery Connect.</p>
+<h3 id="1-registering-as-a-developer">
+      <a href="#1-registering-as-a-developer" aria-hidden="true"><i class="icon icon-link"></i></a>
+      1 Registering as a Developer
+    </h3>
+<p>Before you get started, you must register as a HUAWEI developer and complete identity verification on the <a href="https://developer.huawei.com/consumer/en/">HUAWEI Developer</a> website. For details, please refer to <a href="https://developer.huawei.com/consumer/en/doc/10104">Register a HUAWEI ID</a>.</p>
+<h3 id="2-creating-an-app">
+      <a href="#2-creating-an-app" aria-hidden="true"><i class="icon icon-link"></i></a>
+      2 Creating an App
+    </h3>
+<p>Create an app by referring to <a href="https://developer.huawei.com/consumer/en/doc/development/AppGallery-Connect/agc-create_app">Creating an App</a> at the AppGallery Connect help center. Set the following parameters as described:</p>
+<ul>
+<li><p>Package type: <strong>APK (Android app)</strong></p>
+</li>
+<li><p>Devices: <strong>Mobile phone</strong></p>
+</li>
+<li><p>App category: <strong>App</strong></p>
+</li>
+</ul>
+<h3 id="3-generating-a-signing-certificate-fingerprint">
+      <a href="#3-generating-a-signing-certificate-fingerprint" aria-hidden="true"><i class="icon icon-link"></i></a>
+      3 Generating a Signing Certificate Fingerprint
+    </h3>
+<p>A signing certificate fingerprint is used to verify the authenticity of an app when it attempts to access an HMS Core service through the HMS SDK. Before using the HMS Core service, you must locally generate a signing certificate fingerprint and configure it in AppGallery Connect.</p>
+<p>Please ensure that the following conditions are met:</p>
+<ul>
+<li><p>You have created the app&#39;s signature file. For details, please refer to <a href="https://developer.huawei.com/consumer/en/codelab/HMSPreparation/index.html#3">Generating a Signing Certificate</a>.</p>
+</li>
+<li><p>The JDK has been installed on your PC.</p>
+</li>
+</ul>
+<p>!!!!! TODO OTHER PREPARATIONS</p>
+<p>You can use the keytool tool in the JDK package to generate fingerprints as follows:</p>
+<ol>
+<li>Open the command line tool and run the following command, in which <keystore-file> is the complete path to the app&#39;s signature file:</li>
+</ol>
+<pre><code class="language-bash">keytool -list -v -keystore &lt;keystore-file&gt;</code></pre>
+<ol start="2">
+<li>Obtain the SHA-256 fingerprint from the result. An example of the result is as follows:<pre><code class="language-bash">Alias name: &lt;<span class="hljs-built_in">alias</span>-name&gt;
+Creation date: Aug 29, 2019
+Entry <span class="hljs-built_in">type</span>: PrivateKeyEntry
+Certificate chain length: 1
+Certificate[1]:
+Owner: CN=Android Debug, OU=hua, C=zg
+Issuer: CN=Android Debug, OU=hua, C=zg
+Serial number: 1e46890c
+Valid from: Thu Aug 29 21:09:44 CST 2019 until: Mon Jan 14 21:09:44 CST 2047
+Certificate fingerprints:
+      MD5:  EC:29:9E:ED:18:35:E0:A0:93:EA:AD:E2:D9:4D:B7:6A
+      SHA1: E6:6B:61:C9:E5:86:81:E7:3A:7A:86:11:87:FB:DD:B6:2F:72:9D:80
+      SHA256: 39:B1:5E:52:70:8C:07:6D:5A:F7:0B:96:8B:D1:77:A0:8F:CA:09:08:72:90:FD:2A:1E:DB:9A:6C:2F:4E:B5:97
+Signature algorithm name: SHA256withRSA
+Subject Public Key Algorithm: 2048-bit RSA key
+Version: 3</code></pre>
+</li>
+</ol>
+<h3 id="4-configuring-the-signing-certificate-fingerprint">
+      <a href="#4-configuring-the-signing-certificate-fingerprint" aria-hidden="true"><i class="icon icon-link"></i></a>
+      4 Configuring the Signing Certificate Fingerprint
+    </h3>
+<ol>
+<li><p>Sign in to <a href="https://developer.huawei.com/consumer/en/service/josp/agc/index.html">AppGallery Connect</a> and select <strong>My apps</strong>.</p>
+</li>
+<li><p>Find your app from the list and click it.</p>
+</li>
+<li><p>Go to <strong>Develop</strong> &gt; <strong>Overview</strong> &gt; <strong>App information</strong> and set <strong>SHA-256 certificate fingerprint</strong> to the SHA-256 fingerprint that is generated in the preceding section of <a href="https://developer.huawei.com/consumer/en/doc/development/HMS-Guides/hms-map-v4-configuringinagc#h3">Generating a Signing Certificate Fingerprint</a>.</p>
+</li>
+</ol>
+<p><img src="../img/ConfiguringTheSigningCertificateFingerprint.png" alt="Configuring the Signing Certificate Fingerprint"></p>
+<ol start="4">
+<li>After completing configuration, click  ✓.</li>
+</ol>
+<h3 id="5-enabling-required-services">
+      <a href="#5-enabling-required-services" aria-hidden="true"><i class="icon icon-link"></i></a>
+      5 Enabling Required Services
+    </h3>
+<p>To use Map Kit, enable it in AppGallery Connect.</p>
+<p>For details, please refer to <a href="https://developer.huawei.com/consumer/en/doc/development/AppGallery-Connect/agc-enable_service">Enabling Services</a>.</p>
+<p>I assume you have created an App at AppGallery Connect and enabled Map Kit APIs. </p>
+<p><a href="https://developer.huawei.com/consumer/en/doc/development/HMS-Guides/hms-map-v4-configuringinagc">https://developer.huawei.com/consumer/en/doc/development/HMS-Guides/hms-map-v4-configuringinagc</a></p>
+<h3 id="1.1-preparing-the-development-environment">
+      <a href="#1.1-preparing-the-development-environment" aria-hidden="true"><i class="icon icon-link"></i></a>
+      1.1 Preparing the Development Environment
+    </h3>
+<ul>
+<li>Node.JS (and npm) should be installed.
+  You can download and install from <a href="https://nodejs.org/en/">NodeJS offical site</a>
+  Preferably select LTS version of Node.</li>
+<li>Android SDK should be installed. (Preferably Android Studio)
+  You can download and install from <a href="https://developer.android.com/studio">Android Studio offical site</a>
+  Android Studio automaticly download Android SDK and other required tools.</li>
+<li>Platform-tools and build-tools of the Android SDK should be added to the $PATH variable.</li>
+<li><a href="https://developer.android.com/studio/debug/dev-options">Developer Mode</a> should be enabled on your phone, and debug option should be enabled.</li>
+</ul>
+<h3 id="1.2-integrating-the-hms-sdk">
+      <a href="#1.2-integrating-the-hms-sdk" aria-hidden="true"><i class="icon icon-link"></i></a>
+      1.2 Integrating the HMS SDK
+    </h3>
+<p>_integratingHMSSDK !!! TODO</p>
+<p><a href="https://developer.huawei.com/consumer/en/doc/development/HMS-Guides/hms-map-v4-integratingthehmssdk">https://developer.huawei.com/consumer/en/doc/development/HMS-Guides/hms-map-v4-integratingthehmssdk</a> FOR REACT-NATIVE</p>
+<h2 id="2-adding-permissions">
+      <a href="#2-adding-permissions" aria-hidden="true"><i class="icon icon-link"></i></a>
+      2 Adding Permissions
+    </h2>
+<p>To call capabilities of HUAWEI Map Kit, you must apply for the following permissions for your app:</p>
+<pre><code class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">uses-permission</span> <span class="hljs-attr">android:name</span>=<span class="hljs-string">"android.permission.INTERNET"</span>/&gt;</span> 
+<span class="hljs-tag">&lt;<span class="hljs-name">uses-permission</span> <span class="hljs-attr">android:name</span>=<span class="hljs-string">"android.permission.ACCESS_NETWORK_STATE"</span>/&gt;</span> </code></pre>
+<p>To obtain the current device location, you need to add the following permissions in the AndroidManifest.xml file. In Android 6.0 and later, you need to apply for these permissions dynamically.</p>
+<pre><code class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">uses-permission</span> <span class="hljs-attr">android:name</span>=<span class="hljs-string">"android.permission.ACCESS_COARSE_LOCATION"</span>/&gt;</span> 
+<span class="hljs-tag">&lt;<span class="hljs-name">uses-permission</span> <span class="hljs-attr">android:name</span>=<span class="hljs-string">"android.permission.ACCESS_FINE_LOCATION"</span>/&gt;</span></code></pre>
+<h2 id="3-creating-a-map">
+      <a href="#3-creating-a-map" aria-hidden="true"><i class="icon icon-link"></i></a>
+      3 Creating a Map
+    </h2>
+<p><a href="https://github.com/react-native-community/react-native-maps">https://github.com/react-native-community/react-native-maps</a></p>
+<h4 id="general-usage">
+      <a href="#general-usage" aria-hidden="true"><i class="icon icon-link"></i></a>
+      General Usage
+    </h4>
+<pre><code class="language-js"><span class="hljs-keyword">import</span> MapView <span class="hljs-keyword">from</span> <span class="hljs-string">'react-native-hms-map'</span>;</code></pre>
+<p>or</p>
+<pre><code class="language-js"><span class="hljs-keyword">var</span> MapView = <span class="hljs-built_in">require</span>(<span class="hljs-string">'react-native-hms-map'</span>);</code></pre>
+<p>This MapView component is built so that features on the map (such as Markers, Polygons, etc.) are specified as children of the MapView itself. This provides an intuitive and react-like API for declaratively controlling features on the map.</p>
+<h4 id="rendering-a-map-with-an-initial-region">
+      <a href="#rendering-a-map-with-an-initial-region" aria-hidden="true"><i class="icon icon-link"></i></a>
+      Rendering a Map with an initial region
+    </h4>
+<pre><code class="language-js"> &lt;MapView
+    initialRegion={{
+      latitude: 37.78825,
+      longitude: -122.4324,
+      latitudeDelta: 0.0922,
+      longitudeDelta: 0.0421,
+    }}
+  /&gt;</code></pre>
+<h4 id="using-a-mapview-while-controlling-the-region-as-state">
+      <a href="#using-a-mapview-while-controlling-the-region-as-state" aria-hidden="true"><i class="icon icon-link"></i></a>
+      Using a MapView while controlling the region as state
+    </h4>
+<pre><code class="language-js">getInitialState() {
+  <span class="hljs-keyword">return</span> {
+    <span class="hljs-attr">region</span>: {
+      <span class="hljs-attr">latitude</span>: <span class="hljs-number">37.78825</span>,
+      <span class="hljs-attr">longitude</span>: <span class="hljs-number">-122.4324</span>,
+      <span class="hljs-attr">latitudeDelta</span>: <span class="hljs-number">0.0922</span>,
+      <span class="hljs-attr">longitudeDelta</span>: <span class="hljs-number">0.0421</span>,
+    },
+  };
+}
+
+onRegionChange(region) {
+  <span class="hljs-keyword">this</span>.setState({ region });
+}
+
+render() {
+  <span class="hljs-keyword">return</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">MapView</span>
+      <span class="hljs-attr">region</span>=<span class="hljs-string">{this.state.region}</span>
+      <span class="hljs-attr">onRegionChange</span>=<span class="hljs-string">{this.onRegionChange}</span>
+    /&gt;</span></span>
+  );
+}</code></pre>
+<h3 id="3.1-interacting-with-a-map">
+      <a href="#3.1-interacting-with-a-map" aria-hidden="true"><i class="icon icon-link"></i></a>
+      3.1 Interacting with a Map
+    </h3>
+<p><a href="https://developer.huawei.com/consumer/en/doc/development/HMS-Guides/hms-map-v4-mapinteraction">https://developer.huawei.com/consumer/en/doc/development/HMS-Guides/hms-map-v4-mapinteraction</a></p>
+<h3 id="3.2-drawing-on-a-map">
+      <a href="#3.2-drawing-on-a-map" aria-hidden="true"><i class="icon icon-link"></i></a>
+      3.2 Drawing on a Map
+    </h3>
+<p><a href="https://developer.huawei.com/consumer/en/doc/development/HMS-Guides/hms-map-v4-drawonthemap">https://developer.huawei.com/consumer/en/doc/development/HMS-Guides/hms-map-v4-drawonthemap</a></p>
+<h4 id="1-overview">
+      <a href="#1-overview" aria-hidden="true"><i class="icon icon-link"></i></a>
+      1 Overview
+    </h4>
+<p>This section describes how to draw markers, ground overlays, and shapes on a map. For details, please refer to files such as <strong>MarkersExample.js</strong>, <strong>PolygonsExample.js</strong>, <strong>PolylinesExample.js</strong>, <strong>CirclesExample.js</strong>, <strong>OverlaysExample.js</strong> in the sample code project. Click <a href="TODO">here</a> to download sample code.</p>
+<h4 id="2-components">
+      <a href="#2-components" aria-hidden="true"><i class="icon icon-link"></i></a>
+      2 Components
+    </h4>
+<h4 id="2.1-marker-component">
+      <a href="#2.1-marker-component" aria-hidden="true"><i class="icon icon-link"></i></a>
+      2.1 Marker Component
+    </h4>
+<p>You can add markers to a map to identify locations such as stores and buildings, and provide additional information with information windows.</p>
+<h4 id="2.1.1-adding-a-marker">
+      <a href="#2.1.1-adding-a-marker" aria-hidden="true"><i class="icon icon-link"></i></a>
+      2.1.1 Adding a Marker
+    </h4>
+<p>The following code segment uses the default icon to add a simple marker on a map:</p>
+<pre><code class="language-js"><span class="hljs-keyword">import</span> {Marker} <span class="hljs-keyword">from</span> <span class="hljs-string">'react-native-hms-map'</span>;
+...
+ &lt;Marker
+    coordinate={{<span class="hljs-attr">latitude</span>: <span class="hljs-number">41.0083</span>, <span class="hljs-attr">longitude</span>: <span class="hljs-number">28.9784</span>}}
+    title={<span class="hljs-string">'Hello Huawei Map'</span>}
+    ...
+ /&gt;</code></pre>
+<p>You can use custom images to replace default icons or modify marker attributes to change the marker icons. The following table lists the marker attributes that can be customized.</p>
+<h3 id="props">
+      <a href="#props" aria-hidden="true"><i class="icon icon-link"></i></a>
+      Props
+    </h3>
+<table>
+<thead>
+<tr>
+<th>Prop</th>
+<th>Type</th>
+<th>Default</th>
+<th>Remarks</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>title</code></td>
+<td><code>String</code></td>
+<td>-</td>
+<td>The title of the marker. This is only used if the <Marker /> component has no children that are a <code>&lt;Callout /&gt;</code>, in which case the default callout behavior will be used, which will show both the <code>title</code> and the <code>description</code>, if provided.</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td><code>String</code></td>
+<td>-</td>
+<td>The description of the marker. This is only used if the <Marker /> component has no children that are a <code>&lt;Callout /&gt;</code>, in which case the default callout behavior will be used, which will show both the <code>title</code> and the <code>description</code>, if provided.</td>
+</tr>
+<tr>
+<td><code>image</code></td>
+<td><code>ImageSource</code></td>
+<td>-</td>
+<td>A custom image to be used as the marker&#39;s icon. Only local image resources are allowed to be used.</td>
+</tr>
+<tr>
+<td><code>icon</code></td>
+<td><code>ImageSource</code></td>
+<td>-</td>
+<td>Marker icon to render (equivalent to <code>icon</code> property of GMSMarker Class).</td>
+</tr>
+<tr>
+<td><code>pinColor</code></td>
+<td><code>Color</code></td>
+<td>-</td>
+<td>If no custom marker view or custom image is provided, the platform default pin will be used, which can be customized by this color. Ignored if a custom marker is being used.<br/><br/> For Android, the set of available colors is limited. Unsupported colors will fall back to red. See <a href="https://github.com/react-community/react-native-maps/issues/887">#887</a> for more information.</td>
+</tr>
+<tr>
+<td><code>coordinate</code></td>
+<td><code>LatLng</code></td>
+<td>-</td>
+<td>The coordinate for the marker.</td>
+</tr>
+<tr>
+<td><code>centerOffset</code></td>
+<td><code>Point</code></td>
+<td>(0, 0)</td>
+<td>The offset (in points) at which to display the view.<br/><br/> By default, the center point of an annotation view is placed at the coordinate point of the associated annotation. You can use this property to reposition the annotation view as needed. This x and y offset values are measured in points. Positive offset values move the annotation view down and to the right, while negative values move it up and to the left.<br/><br/> For Google Maps, see the <code>anchor</code> prop.</td>
+</tr>
+<tr>
+<td><code>calloutOffset</code></td>
+<td><code>Point</code></td>
+<td>(0, 0)</td>
+<td>The offset (in points) at which to place the callout bubble.<br/><br/> This property determines the additional distance by which to move the callout bubble. When this property is set to (0, 0), the anchor point of the callout bubble is placed on the top-center point of the marker view’s frame. Specifying positive offset values moves the callout bubble down and to the right, while specifying negative values moves it up and to the left.<br/><br/> For Google Maps, see the <code>calloutAnchor</code> prop.</td>
+</tr>
+<tr>
+<td><code>anchor</code></td>
+<td><code>Point</code></td>
+<td>(0.5, 1)</td>
+<td>Sets the anchor point for the marker.<br/><br/> The anchor specifies the point in the icon image that is anchored to the marker&#39;s position on the Earth&#39;s surface.<br/><br/> The anchor point is specified in the continuous space [0.0, 1.0] x [0.0, 1.0], where (0, 0) is the top-left corner of the image, and (1, 1) is the bottom-right corner. The anchoring point in a W x H image is the nearest discrete grid point in a (W + 1) x (H + 1) grid, obtained by scaling the then rounding. For example, in a 4 x 2 image, the anchor point (0.7, 0.6) resolves to the grid point at (3, 1).<br/><br/> For MapKit on iOS, see the <code>centerOffset</code> prop.</td>
+</tr>
+<tr>
+<td><code>calloutAnchor</code></td>
+<td><code>Point</code></td>
+<td>(0.5, 0)</td>
+<td>Specifies the point in the marker image at which to anchor the callout when it is displayed. This is specified in the same coordinate system as the anchor. See the <code>anchor</code> prop for more details.<br/><br/> The default is the top middle of the image.<br/><br/> For MapKit on iOS, see the <code>calloutOffset</code> prop.</td>
+</tr>
+<tr>
+<td><code>flat</code></td>
+<td><code>Boolean</code></td>
+<td>false</td>
+<td>Sets whether this marker should be flat against the map true or a billboard facing the camera.</td>
+</tr>
+<tr>
+<td><code>identifier</code></td>
+<td><code>String</code></td>
+<td>-</td>
+<td>An identifier used to reference this marker at a later date.</td>
+</tr>
+<tr>
+<td><code>rotation</code></td>
+<td><code>Float</code></td>
+<td>0</td>
+<td>A float number indicating marker&#39;s rotation angle, in degrees.</td>
+</tr>
+<tr>
+<td><code>draggable</code></td>
+<td><code>&lt;null&gt;</code></td>
+<td>-</td>
+<td>This is a non-value based prop. Adding this allows the marker to be draggable (re-positioned).</td>
+</tr>
+<tr>
+<td><code>tracksViewChanges</code></td>
+<td><code>Boolean</code></td>
+<td>true</td>
+<td>Sets whether this marker should track view changes. It&#39;s recommended to turn it off whenever it&#39;s possible to improve custom marker performance.</td>
+</tr>
+<tr>
+<td><code>tracksInfoWindowChanges</code></td>
+<td><code>Boolean</code></td>
+<td>false</td>
+<td>Sets whether this marker should track view changes in info window. Enabling it will let marker change content of info window after first render pass, but will lead to decreased performance, so it&#39;s recommended to disable it whenever you don&#39;t need it. <strong>Note</strong>: iOS Google Maps only.</td>
+</tr>
+<tr>
+<td><code>stopPropagation</code></td>
+<td><code>Boolean</code></td>
+<td>false</td>
+<td>Sets whether this marker should propagate <code>onPress</code> events. Enabling it will stop the parent <code>MapView</code>&#39;s <code>onPress</code> from being called. <strong>Note</strong>: iOS only. Android does not propagate <code>onPress</code> events. See <a href="https://github.com/react-community/react-native-maps/issues/1132">#1132</a> for more information.</td>
+</tr>
+<tr>
+<td><code>opacity</code></td>
+<td><code>Float</code></td>
+<td>1.0</td>
+<td>The marker&#39;s opacity between 0.0 and 1.0.</td>
+</tr>
+<tr>
+<td><code>isPreselected</code></td>
+<td><code>Boolean</code></td>
+<td>false</td>
+<td>When true, the marker will be pre-selected. Setting this to true allows the user to drag the marker without needing to tap on it once to focus on it. <strong>Note</strong>: iOS Apple Maps only.</td>
+</tr>
+</tbody></table>
+<h3 id="events">
+      <a href="#events" aria-hidden="true"><i class="icon icon-link"></i></a>
+      Events
+    </h3>
+<p>To access event data, you will need to use <code>e.nativeEvent</code>. For example, <code>onPress={e =&gt; console.log(e.nativeEvent)}</code> will log the entire event object to your console.</p>
+<table>
+<thead>
+<tr>
+<th>Event Name</th>
+<th>Returns</th>
+<th>Remarks</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>onPress</code></td>
+<td><code>{ coordinate: LatLng, position: Point }</code></td>
+<td>Callback that is called when the user presses on the marker</td>
+</tr>
+<tr>
+<td><code>onSelect</code></td>
+<td><code>{ coordinate: LatLng, position: Point }</code></td>
+<td>Callback that is called when the user selects the marker, before the callout is shown. <strong>Note</strong>: iOS only.</td>
+</tr>
+<tr>
+<td><code>onDeselect</code></td>
+<td><code>{ coordinate: LatLng, position: Point }</code></td>
+<td>Callback that is called when the marker is deselected, before the callout is hidden. <strong>Note</strong>: iOS only.</td>
+</tr>
+<tr>
+<td><code>onCalloutPress</code></td>
+<td>| Callback that is called when the user taps the callout view.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>onDragStart</code></td>
+<td><code>{ coordinate: LatLng, position: Point }</code></td>
+<td>Callback that is called when the user initiates a drag on this marker (if it is draggable)</td>
+</tr>
+<tr>
+<td><code>onDrag</code></td>
+<td><code>{ coordinate: LatLng, position: Point }</code></td>
+<td>Callback called continuously as the marker is dragged</td>
+</tr>
+<tr>
+<td><code>onDragEnd</code></td>
+<td><code>{ coordinate: LatLng, position: Point }</code></td>
+<td>Callback that is called when a drag on this marker finishes. This is usually the point you will want to setState on the marker&#39;s coordinate again</td>
+</tr>
+</tbody></table>
+<h2 id="methods">
+      <a href="#methods" aria-hidden="true"><i class="icon icon-link"></i></a>
+      Methods
+    </h2>
+<table>
+<thead>
+<tr>
+<th>Method Name</th>
+<th>Arguments</th>
+<th>Remarks</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>showCallout</code></td>
+<td>| Shows the callout for this marker</td>
+<td></td>
+</tr>
+<tr>
+<td><code>hideCallout</code></td>
+<td>| Hides the callout for this marker</td>
+<td></td>
+</tr>
+<tr>
+<td><code>redrawCallout</code></td>
+<td>| Causes a redraw of the marker&#39;s callout. Useful for Google Maps on iOS. <strong>Note</strong>: iOS only.</td>
+<td></td>
+</tr>
+<tr>
+<td><code>animateMarkerToCoordinate</code></td>
+<td><code>coordinate: LatLng, duration: number</code></td>
+<td>Animates marker movement. <strong>Note</strong>: Android only</td>
+</tr>
+<tr>
+<td><code>redraw</code></td>
+<td>| Causes a redraw of the marker. Useful when there are updates to the marker and <code>tracksViewChanges</code> comes with a cost that is too high.</td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="types">
+      <a href="#types" aria-hidden="true"><i class="icon icon-link"></i></a>
+      Types
+    </h2>
+<pre><code>type LatLng {
+  latitude: Number,
+  longitude: Number,
+}</code></pre><pre><code>type Point {
+  x: Number,
+  y: Number,
+}</code></pre><p>!! TODO
+The following code segment creates a marker with a custom image: ....</p>
+<p>!!! TODO
+about anchor point settings, please refer to the Marker.setAnchor(float anchorU, float anchorV) method.</p>
+<p>!!! TODO</p>
+<h4 id="marker-onpress-event">
+      <a href="#marker-onpress-event" aria-hidden="true"><i class="icon icon-link"></i></a>
+      Marker onPress Event
+    </h4>
+<p> You can use onPress event to listen for marker tap events.
+ The default action for a marker tap event is to display the information window (if available) of the marker and center the marker on the map.</p>
+<pre><code class="language-js"> TODO</code></pre>
+<h4 id="drag-event">
+      <a href="#drag-event" aria-hidden="true"><i class="icon icon-link"></i></a>
+      Drag Event
+    </h4>
+<p>You can use onDragStart, onDrag and onDragEnd event to listen for marker tap events.
+To drag a marker, a user needs to long press it, drag it to the specified position on the screen, and drop it. When the user starts dragging the marker, onDragStart is called. When the user drags the marker, onDrag is called repeatedly. When the user stops dragging the marker, onDragEnd is called.</p>
+<pre><code class="language-js">TODO</code></pre>
+<h4 id="setting-information-windows-(supports-partially)">
+      <a href="#setting-information-windows-(supports-partially)" aria-hidden="true"><i class="icon icon-link"></i></a>
+      Setting Information Windows (Supports partially)
+    </h4>
+<p>An information window is displayed above a marker to provide detailed marker information through text or an image.</p>
+<p>Adding an Information Window</p>
+<p>The easiest way to add an information window for a marker is to set the title and description props of the related Marker object. If a user taps the marker, the information window is then displayed.</p>
+<pre><code class="language-js">TODO</code></pre>
+<h4 id="adding-shape">
+      <a href="#adding-shape" aria-hidden="true"><i class="icon icon-link"></i></a>
+      Adding Shape
+    </h4>
+<p>With the HMS Core Map SDK, you can add different shapes to a map, including polylines, polygons, circles and overlays.</p>
+<h4 id="adding-polyline">
+      <a href="#adding-polyline" aria-hidden="true"><i class="icon icon-link"></i></a>
+      Adding Polyline
+    </h4>
+<p>A polyline consists of several ordered LatLng type.</p>
+<p>The sample code is as follows:</p>
+<pre><code class="language-js">TODO</code></pre>
+<p>Listen for polyline tap events</p>
+<pre><code class="language-js">TODO</code></pre>
+<p><img src="../img/polyline.png" alt="Polyline"></p>
+<h4 id="adding-polygon">
+      <a href="#adding-polygon" aria-hidden="true"><i class="icon icon-link"></i></a>
+      Adding Polygon
+    </h4>
+<p>Similar to a polyline, a polygon consists of a group of ordered coordinates. However, a polygon is a closed area.</p>
+<p>The sample code is as follows:</p>
+<pre><code class="language-js">TODO</code></pre>
+<p>Listen for polyline tap events
+<code>`</code>js
+TODO</p>
+<p><img src="../img/polygon.png" alt="Polygon"></p>
+<h2 id="4-api-references">
+      <a href="#4-api-references" aria-hidden="true"><i class="icon icon-link"></i></a>
+      4 API References
+    </h2>
+<h2 id="5-examples">
+      <a href="#5-examples" aria-hidden="true"><i class="icon icon-link"></i></a>
+      5 Examples
+    </h2>
+<p>This section provides links to sample code on GitHub.
+Currently, the sample code of the SDK for Android is provided, covering the usage of most APIs. In the sample code, you can find many code snippets used in the development guide.</p>
+<p><strong>Notice：</strong>
+If the map displays only empty tiles after you install the sample code on your smartphone, you need to configure an agconnct-services.json file and signing certificate. For details, please refer to <a href="https://developer.huawei.com/consumer/en/doc/development/HMS-Guides/hms-map-v4-configuringinagc">Preparations</a>.</p>
+
+    </div>
+  </body>
+</html>
